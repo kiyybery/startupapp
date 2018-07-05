@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 void main() {
   runApp(new MaterialApp(
     title: "Flutter Tutorial",
-    home: new Counter(),
+    home: new Counters(),
   ));
 }
 
@@ -130,5 +130,48 @@ class _CounterState extends State<Counter> {
         new Text('Count: $_counter'),
       ],
     );
+  }
+}
+
+class CounterDisplay extends StatelessWidget{
+  CounterDisplay({this.count});
+
+  final int count;
+  @override
+  Widget build(BuildContext context) {
+    return new Text('Count: $count');
+  }
+}
+
+class CounterIncrementor extends StatelessWidget{
+  final VoidCallback onPressed;
+  CounterIncrementor({this.onPressed});
+  
+  @override
+  Widget build(BuildContext context) {
+    return new RaisedButton(onPressed: onPressed,child: new Text('Increment'),);
+  }
+}
+
+class Counters extends StatefulWidget {
+  @override
+  _CounterStates createState() => new _CounterStates();
+}
+
+class _CounterStates extends State<Counters> {
+  int _counter = 0;
+
+  void _increment() {
+    setState(() {
+      ++_counter;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return new Row(children: <Widget>[
+      new CounterIncrementor(onPressed: _increment),
+      new CounterDisplay(count: _counter),
+    ]);
   }
 }
